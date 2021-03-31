@@ -33,7 +33,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
             synchronized (ContactRoomDatabase.class) {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ContactRoomDatabase.class, "contact_databse")
+                            ContactRoomDatabase.class, "contact_database")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
