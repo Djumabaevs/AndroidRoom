@@ -1,5 +1,6 @@
 package com.example.androidroom.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -19,6 +20,6 @@ public interface ContactDao {
     void deleteAll();
 
     @Query("SELECT * FROM contact_table ORDER BY name ASC")
-    List<Contact> getAllContacts();
+    LiveData<List<Contact>> getAllContacts();
 
 }

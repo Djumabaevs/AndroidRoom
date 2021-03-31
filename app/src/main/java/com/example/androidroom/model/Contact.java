@@ -21,7 +21,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(@NonNull String name, @NonNull String occupation) {
+    public Contact(@NonNull String name, String occupation) {
         this.name = name;
         this.occupation = occupation;
     }
