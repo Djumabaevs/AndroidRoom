@@ -5,6 +5,7 @@ import androidx.core.database.DatabaseUtilsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -15,7 +16,9 @@ import com.example.androidroom.model.ContactViewModel;
 
 public class NewContact extends AppCompatActivity {
 
-    private ActivityNewContactBinding binding;
+    public static final String NAME_REPLY = "name_reply";
+    public static final String OCCUPATION = "occupation";
+    public ActivityNewContactBinding binding;
 
     private ContactViewModel contactViewModel;
 
@@ -32,14 +35,22 @@ public class NewContact extends AppCompatActivity {
 
         binding.saveButton.setOnClickListener(view -> {
 
+            Intent replyIntent = new Intent();
+
+
             if(!TextUtils.isEmpty(binding.nameText.getText()) && !TextUtils.isEmpty(binding.occupationText.getText())) {
-                Contact contact = new Contact(binding.nameText.getText().toString(),
-                        binding.occupationText.getText().toString());
-                ContactViewModel.insert(contact);
+                String name = binding.nameText.getText().toString();
+                String occupation = binding.occupationText.getText().toString();
+
+                replyIntent.putExtra(NAME_REPLY, name);
+                replyIntent.putExtra(OCCUPATION, occupation);
+                setResult(RESULT_OK, replyIntent);
 
             } else {
-                Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED, replyIntent);
             }
+            finish();
         });
     }
 }
