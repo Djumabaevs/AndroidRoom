@@ -23,16 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE =1;
     private ContactViewModel contactViewModel;
 
-    public TextView textView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        textView = findViewById(R.id.text_id);
 
         contactViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this
         .getApplication())
@@ -46,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                     builder.append("-").append(contact.getName()).append(" ").append(contact.getOccupation());
                     Log.d("Tag", "onChanged: " + contact.getName());
                 }
-                textView.setText(builder.toString());
             }
         });
         FloatingActionButton fab = findViewById(R.id.add_contact_fab);
