@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.androidroom.databinding.ActivityNewContactBinding;
 import com.example.androidroom.model.Contact;
 import com.example.androidroom.model.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         textView = findViewById(R.id.text_id);
 
