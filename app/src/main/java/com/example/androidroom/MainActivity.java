@@ -62,5 +62,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == NEW_CONTACT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String name = data.getStringExtra(NewContact.NAME_REPLY);
+            String occupation = data.getStringExtra(NewContact.OCCUPATION);
+            Contact contact = new Contact(name, occupation);
+
+            ContactViewModel.insert(contact);
+        }
     }
 }
