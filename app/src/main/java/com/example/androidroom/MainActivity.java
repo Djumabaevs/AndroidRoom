@@ -2,47 +2,58 @@ package com.example.androidroom;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
+import com.example.androidroom.adapter.RecyclerViewAdapter;
 import com.example.androidroom.model.Contact;
 import com.example.androidroom.model.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnContactClickListener {
 
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE =1;
     private ContactViewModel contactViewModel;
-
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private LiveData<List<Contact>> contactList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
         contactViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this
         .getApplication())
                 .create(ContactViewModel.class);
 
-        contactViewModel.getAllContacts().observe(MainActivity.this, new Observer<List<Contact>>() {
-            @Override
-            public void onChanged(List<Contact> contacts) {
-                StringBuilder builder = new StringBuilder();
-                for(Contact contact : contacts) {
-                    builder.append("-").append(contact.getName()).append(" ").append(contact.getOccupation());
-                    Log.d("Tag", "onChanged: " + contact.getName());
-                }
-            }
+
+        contactViewModel.getAllContacts().observe(MainActivity.this, contacts -> {
+
+            recyclerViewAdapter = new RecyclerViewAdapter(contacts, this, this);
+            recyclerView.setAdapter(recyclerViewAdapter);
+
+          /*  StringBuilder builder = new StringBuilder();
+            for(Contact contact : contacts) {
+                builder.append("-").append(contact.getName()).append(" ").append(contact.getOccupation());
+                Log.d("Tag", "onChanged: " + contact.getName());
+            }*/
         });
+
+
         FloatingActionButton fab = findViewById(R.id.add_contact_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,5 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
             ContactViewModel.insert(contact);
         }
+    }
+
+    @Override
+    public void onContactClick(int position) {
+
+
     }
 }
