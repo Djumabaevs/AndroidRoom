@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.androidroom.adapter.RecyclerViewAdapter;
@@ -22,6 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnContactClickListener {
 
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE =1;
+    private static final String TAG = "tag";
     private ContactViewModel contactViewModel;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -78,7 +80,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @Override
     public void onContactClick(int position) {
-
+        Contact contact = contactViewModel.allContacts.getValue().get(position);
+        Log.d(TAG, "onContactClick: " + contact.getName());
+        startActivity(new Intent(MainActivity.this, NewContact.class));
 
     }
 }

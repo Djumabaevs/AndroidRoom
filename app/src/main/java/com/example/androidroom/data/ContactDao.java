@@ -2,9 +2,11 @@ package com.example.androidroom.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.androidroom.model.Contact;
 
@@ -21,5 +23,14 @@ public interface ContactDao {
 
     @Query("SELECT * FROM contact_table ORDER BY name ASC")
     LiveData<List<Contact>> getAllContacts();
+
+    @Update
+    void update(Contact contact);
+
+    @Delete
+    void delete(Contact contact);
+
+    @Query("SELECT * from contact_table WHERE contact_table.id == :id")
+    LiveData<Contact> get(int id);
 
 }
