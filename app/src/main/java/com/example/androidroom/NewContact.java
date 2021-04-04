@@ -92,5 +92,23 @@ public class NewContact extends AppCompatActivity {
             binding.updateButton.setVisibility(View.GONE);
             binding.deleteButton.setVisibility(View.GONE);
         }
+
+        binding.deleteButton.setOnClickListener(view -> {
+            int id = contactId;
+            String name = binding.nameText.getText().toString().trim();
+            String occupation = binding.occupationText.getText().toString().trim();
+
+            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)) {
+                Snackbar.make(binding.nameText, R.string.empty, Snackbar.LENGTH_SHORT).show();
+            } else {
+                Contact contact = new Contact();
+                contact.setId(id);
+                contact.setName(name);
+                contact.setOccupation(occupation);
+
+                ContactViewModel.delete(contact);
+                finish();
+            }
+        });
     }
 }
