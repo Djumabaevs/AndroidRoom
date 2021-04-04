@@ -69,22 +69,7 @@ public class NewContact extends AppCompatActivity {
             finish();
         });
 
-        binding.updateButton.setOnClickListener(view -> {
-            int id = contactId;
-            String name = binding.nameText.getText().toString().trim();
-            String occupation = binding.occupationText.getText().toString().trim();
-
-            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)) {
-                Snackbar.make(binding.nameText, R.string.empty, Snackbar.LENGTH_SHORT).show();
-            } else {
-                Contact contact = new Contact();
-                contact.setId(id);
-                contact.setName(name);
-                contact.setOccupation(occupation);
-                ContactViewModel.update(contact);
-                finish();
-            }
-        });
+        binding.updateButton.setOnClickListener(view -> edit(false));
 
         if(isEdit) {
             binding.saveButton.setVisibility(View.GONE);
@@ -93,22 +78,27 @@ public class NewContact extends AppCompatActivity {
             binding.deleteButton.setVisibility(View.GONE);
         }
 
-        binding.deleteButton.setOnClickListener(view -> {
-            int id = contactId;
-            String name = binding.nameText.getText().toString().trim();
-            String occupation = binding.occupationText.getText().toString().trim();
+        binding.deleteButton.setOnClickListener(view -> edit(true));
+    }
 
-            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)) {
-                Snackbar.make(binding.nameText, R.string.empty, Snackbar.LENGTH_SHORT).show();
-            } else {
-                Contact contact = new Contact();
-                contact.setId(id);
-                contact.setName(name);
-                contact.setOccupation(occupation);
+    private void edit(Boolean isDelete) {
+        String name = binding.nameText.getText().toString().trim();
+        String occupation = binding.occupationText.getText().toString().trim();
 
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)) {
+            Snackbar.make(binding.nameText, R.string.empty, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Contact contact = new Contact();
+            contact.setId(contactId);
+            contact.setName(name);
+            contact.setOccupation(occupation);
+
+            if(isDelete) {
                 ContactViewModel.delete(contact);
-                finish();
+            } else {
+                ContactViewModel.update(contact);
             }
-        });
+            finish();
+        }
     }
 }
