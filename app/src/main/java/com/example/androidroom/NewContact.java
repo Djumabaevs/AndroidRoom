@@ -99,6 +99,7 @@ public class NewContact extends AppCompatActivity {
                 ContactViewModel.update(contact);
             }
             finish();
+            //https://github.com/Djumabaevs/Todoister.git
         }
     }
 }
