@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 
 import com.example.androidroom.databinding.ActivityNewContactBinding;
@@ -84,5 +85,12 @@ public class NewContact extends AppCompatActivity {
                 finish();
             }
         });
+
+        if(isEdit) {
+            binding.saveButton.setVisibility(View.GONE);
+        } else {
+            binding.updateButton.setVisibility(View.GONE);
+            binding.deleteButton.setVisibility(View.GONE);
+        }
     }
 }
